@@ -17,7 +17,7 @@ layout1 = [
     [sg.Text("Choose 'e' for encryption / 'd' for decryption "),sg.Combo(['e','d'],key='type')],
     [sg.Text('Enter the PATH of the image:'),sg.InputText("", key='adress')],
     [sg.Text('Enter the key(0-255):'),sg.InputText("", key='code'),sg.Button(button_text='OK'),sg.Button(button_text='Exit')],
-         ]
+         ]  #Layout for image encryption or decryption
 
 layout1a=[
     [sg.Text("Congratulation! Your image is encrypted as enc.py")],
@@ -38,7 +38,7 @@ layout2 =layout2 =[
     [sg.Text('Enter the Key:                       '),sg.InputText("", key='key_r')],
     [sg.Text('Enter the Encrypted Message:'),sg.InputText("", key='en_text_r'),sg.Button(button_text='Decrypt')],
     [sg.Text('Encrypted Message:'),sg.InputText("", key="de_text")]
-                  ]
+                  ]   #Layout for Message encryption and decryption
 
 
 
@@ -55,14 +55,14 @@ if choice[0]=='Image':
     while True:
         event1, values1 = window1.Read()
         if event1 == 'OK':
-            if values1['type'] == 'e':
+            if values1['type'] == 'e':                                       #Encryption of Image
                 cry_ig.encrypt(values1['adress'], values1['code'])
                 window1a = sg.Window('Crytography', layout1a)
                 event1a = window1a.Read()
                 if event1a in (None, 'OK'):
                     window1a.Close()
                 break
-            elif values1['type'] == 'd':
+            elif values1['type'] == 'd':                                      #Decryption of Image
                 cry_ig.decrypt(values1['adress'], values1['code'])
                 window1b = sg.Window('Crytography', layout1b)
                 event1b = window1b.Read()
@@ -80,13 +80,13 @@ elif choice[0]=='Message':
     window2 = sg.Window('Crytography', layout2)
     while True:
         event2, value2 = window2.Read()
-        if event2 == 'Encrypt':
+        if event2 == 'Encrypt':                                                         #Encryption of Message
             en_key.append(cry_me.key())
             encoded_text.append(cry_me.encryption(value2['text'], en_key[0]))
             window2.FindElement('key_c').Update(en_key[0])
             window2.FindElement('en_text_c').Update(encoded_text[0])
 
-        elif event2 == 'Decrypt':
+        elif event2 == 'Decrypt':                                                       #Decryption of Message
             en_message = value2['en_text_r']
             key = value2['key_r']
             decoded_text.append(cry_me.decryption(en_message.encode(), key.encode()))
